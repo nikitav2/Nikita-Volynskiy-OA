@@ -107,6 +107,43 @@ def certain_person_NETID(NetID):
         cursor.close() 
         conn.close()
 
+@app.route('/update', methods=['PUT'])
+def update_person():
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        json_data = request.json	
+        if request.method == 'PUT':	
+            bindData = []
+            sqlQuery = "UPDATE new_schema.PipeLine SET "	
+            for key in json_data:
+                if (key == 'ID'):
+                    continue
+                sqlQuery += key + "=%s,"
+                bindData.append(json_data[key])
+            index = len(sqlQuery)
+            sqlQuery = sqlQuery[:-1:]
+            sqlQuery += " WHERE ID = %s"
+            print(sqlQuery)
+            print(bindData)
+            bindData.append(json_data['ID'])
+            bindData = tuple(bindData)
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute(sqlQuery, bindData)
+            conn.commit()
+            respone = jsonify('Person updated successfully!')
+            respone.status_code = 200
+            return respone
+        else:
+            return not_found()	
+    except Exception as e:
+        print(e)
+        response = jsonify(str(e))
+        return response
+    finally:
+        cursor.close() 
+        conn.close()
 
 
 @app.errorhandler(404)
