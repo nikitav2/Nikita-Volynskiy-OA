@@ -146,6 +146,25 @@ def update_person():
         conn.close()
 
 
+@app.route('/delete/<int:id>', methods=['DELETE'])
+def delete_person(id):
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM new_schema.PipeLine WHERE ID =%s", (id,))
+        conn.commit()
+        respone = jsonify('Person deleted successfully!')
+        respone.status_code = 200
+        return respone
+    except Exception as e:
+        print(e)
+        
+        respon = jsonify(str(e))
+        return respon
+    finally:
+        cursor.close() 
+        conn.close()
+
 @app.errorhandler(404)
 def not_found(error=None):
     message = {
