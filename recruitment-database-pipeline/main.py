@@ -47,7 +47,25 @@ def add_person():
         cursor.close() 
         conn.close()
 
+@app.route('/people')
+def person():
+    try:
+        conn = mysql.connect()
+        
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT ID , Timestamp , Email_Address , Name , NetID ,  Year_In_School , Major  , Second_Major , Minor , Second_Minor ,  GPA , LinkedIn_Personal_Website  , Which_Team_Interests_You , Why_Does_This_Team_Interest_You , How_Much_Time_Can_You_Commit_Per_Week , What_Value_Will_You_Bring_To_Quant , What_Do_You_Hope_To_Get_Out_Of_Quant FROM new_schema.PipeLine")
+        empRows = cursor.fetchall()
+        
+        respone = jsonify(empRows)
+        respone.status_code = 200
+        return respone
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close() 
+        conn.close()
 
+        
 @app.errorhandler(404)
 def not_found(error=None):
     message = {
