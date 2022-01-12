@@ -19,18 +19,18 @@ Before running the program please make sure that you have created your data base
 ## **Example: JSON ADD**
 {
     "ID" : 53 , 
-    "Timestamp" : "12-asd-ds2a2ss4" , 
-    "Email_Address" : "asaaddswd22sd@yaddhoo.com" , 
-    "Name" : "ssdd" , 
-    "NetID" : "wqesd" ,  
-    "Year_In_School" : "sjffjs" , 
-    "Major" : "Computer Svffcience"  , 
-    "GPA" : "3.ffss75" , 
-    "LinkedIn_Personal_Website" : "safkaskvvfffdvfsakssfssss"  , 
-    "Which_Team_Interests_You" : "hsi", 
-    "Why_Does_This_Team_Interest_You" : "byse" , 
-    "How_Much_Time_Can_You_Commit_Per_Week" : "csya" , 
-    "What_Value_Will_You_Bring_To_Quant" : "lilsy" , 
-    "What_Do_You_Hope_To_Get_Out_Of_Quant" : "ysoooooo"
+    "Timestamp" : "12-24-2012 05:32:44" , 
+    "Email_Address" : "bob@yahoo.com" , 
+    "Name" : "Bog" , 
+    "NetID" : "person53" ,  
+    "Year_In_School" : "Freshman" , 
+    "Major" : "Computer Science"  , 
+    "GPA" : "3.34" , 
+    "LinkedIn_Personal_Website" : "bobs"  , 
+    "Which_Team_Interests_You" : "abcdef", 
+    "Why_Does_This_Team_Interest_You" : "abcedfg" , 
+    "How_Much_Time_Can_You_Commit_Per_Week" : "abcedefghi" , 
+    "What_Value_Will_You_Bring_To_Quant" : "abcdefghijk" , 
+    "What_Do_You_Hope_To_Get_Out_Of_Quant" : "abcdefghijkl"
 }
 
