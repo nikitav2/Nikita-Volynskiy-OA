@@ -6,9 +6,6 @@ from config import mysql
 from flask import json, jsonify
 from flask import flash, request
 
-# This is the 
-
-
 
 @app.route('/add', methods=['POST'])
 def add_person():
