@@ -10,22 +10,30 @@ from flask import flash, request
 def add_person():
    
     try:
-
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT ID FROM new_schema.PipeLine ORDER BY ID DESC LIMIT 1")
+        empRow = cursor.fetchone()
+        print(empRow)
+        number = empRow['ID'] + 1
         conn = mysql.connect()
         cursor = conn.cursor()
         json_data = request.json
+        if (json_data['ID'] != number):
+            raise Exception("ID. Server was expecting ID with value %s" % (number,)) 
+            respone = jsonify("Not correct ID Number was expecting: " + number)
+            return respone
         if (not('Second_Major' in json_data.keys())):
-            json_data.update(Second_Major = "Null")
+            json_data.update(Second_Major = None)
         if (not('Minor' in json_data.keys())):
-            json_data.update(Minor = "Null")
+            json_data.update(Minor = None)
         if (not('Second_Minor' in json_data.keys())):
-            json_data.update(Second_Minor = "Null")
+            json_data.update(Second_Minor = None)
         if (not('GPA' in json_data.keys())):
-            json_data.update(GPA = "Null")
+            json_data.update(GPA = None)
         if (not('LinkedIn_Personal_Website' in json_data.keys())):
-            json_data.update(LinkedIn_Personal_Website = "Null")
+            json_data.update(LinkedIn_Personal_Website = None)
        
-        print(json_data)
         if request.method == 'POST':			
                 sqlQuery = "INSERT INTO new_schema.PipeLine(ID , Timestamp , Email_Address , Name , NetID ,  Year_In_School , Major  , Second_Major , Minor , Second_Minor ,  GPA , LinkedIn_Personal_Website  , Which_Team_Interests_You , Why_Does_This_Team_Interest_You , How_Much_Time_Can_You_Commit_Per_Week , What_Value_Will_You_Bring_To_Quant , What_Do_You_Hope_To_Get_Out_Of_Quant) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s )"
                 bindData = (json_data['ID'] , json_data['Timestamp'] , json_data['Email_Address'] , json_data['Name'] , json_data['NetID'] ,  json_data['Year_In_School'] , json_data['Major']  , json_data['Second_Major'] , json_data['Minor'], json_data['Second_Minor'] ,  json_data['GPA'] , json_data['LinkedIn_Personal_Website'], json_data['Which_Team_Interests_You'], json_data['Why_Does_This_Team_Interest_You'] , json_data['How_Much_Time_Can_You_Commit_Per_Week'] , json_data['What_Value_Will_You_Bring_To_Quant'] , json_data['What_Do_You_Hope_To_Get_Out_Of_Quant'] )
@@ -65,7 +73,7 @@ def person():
         cursor.close() 
         conn.close()
 
-@app.route('/people/<int:id>')
+@app.route('/people/ID/<int:id>')
 def certain_person_ID(id):
     try:
      conn = mysql.connect()
@@ -86,7 +94,7 @@ def certain_person_ID(id):
         cursor.close() 
         conn.close()
 
-@app.route('/people/<string:NetID>')
+@app.route('/people/NetID/<string:NetID>')
 def certain_person_NETID(NetID):
     try:
         conn = mysql.connect()
@@ -146,7 +154,7 @@ def update_person():
         conn.close()
 
 
-@app.route('/delete/<int:id>', methods=['DELETE'])
+@app.route('/delete/ID/<int:id>', methods=['DELETE'])
 def delete_person(id):
     try:
         conn = mysql.connect()
@@ -166,7 +174,7 @@ def delete_person(id):
         conn.close()
 
 
-@app.route('/delete/<string:NetID>', methods=['DELETE'])
+@app.route('/delete/NetID/<string:NetID>', methods=['DELETE'])
 def delete_person_NetID(NetID):
     try:
         conn = mysql.connect()
