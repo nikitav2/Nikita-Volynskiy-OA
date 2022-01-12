@@ -1,6 +1,7 @@
 # Running the WebServer and API
-Before running the program please make sure that you have created your data base and change the confi.py file accordingly. Use the text in "Quant Script DataBase.sql" file to run a SQL Script in your database which will load the initial data.
-## **Python: Setting up enviornment and running the code**
+Before running the program please make sure that you have created your DataBase and change the confi.py file accordingly. Use the text in "Quant Script DataBase.sql" file to run a SQL Script in your database which will load the initial data. 
+
+## **Python: Setting up Enviornment and running the code**
 
 * Setup: Run on command Line In this Particular Order: 
     * python3 -m venv .venv
@@ -34,3 +35,7 @@ Before running the program please make sure that you have created your data base
     "What_Do_You_Hope_To_Get_Out_Of_Quant" : "abcdefghijkl"
 }
 
+## **Some Notes:**
+* Kept both Timestamp and GPA as strings for there were some discrepancies in the initial data. If given more time I would figure out a way to parse both in a uniform way so that I could make them into the correct data types.
+* If I had more time I would implement more query's that would help sort recruits faster and by more fields.
+* Ultimately, the goal would be to automate the google form so that all the information gets pulled directly into the SQL server.
