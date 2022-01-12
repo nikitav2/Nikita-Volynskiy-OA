@@ -6,23 +6,26 @@ from config import mysql
 from flask import json, jsonify
 from flask import flash, request
 
+# This is the 
+
+
+
 @app.route('/add', methods=['POST'])
 def add_person():
-   
+    """Post Method that allows a new recruit to be added to the database. User only has to provide fields that are Non Nullable."""
     try:
+        
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute("SELECT ID FROM new_schema.PipeLine ORDER BY ID DESC LIMIT 1")
         empRow = cursor.fetchone()
-        print(empRow)
         number = empRow['ID'] + 1
         conn = mysql.connect()
         cursor = conn.cursor()
         json_data = request.json
+        # Insures that the user is adding an ID that is one greater than the maximum ID in the table
         if (json_data['ID'] != number):
             raise Exception("ID. Server was expecting ID with value %s" % (number,)) 
-            respone = jsonify("Not correct ID Number was expecting: " + number)
-            return respone
         if (not('Second_Major' in json_data.keys())):
             json_data.update(Second_Major = None)
         if (not('Minor' in json_data.keys())):
@@ -57,13 +60,12 @@ def add_person():
 
 @app.route('/people')
 def person():
+    """Returns all of the data in the table"""
     try:
         conn = mysql.connect()
-        
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute("SELECT ID , Timestamp , Email_Address , Name , NetID ,  Year_In_School , Major  , Second_Major , Minor , Second_Minor ,  GPA , LinkedIn_Personal_Website  , Which_Team_Interests_You , Why_Does_This_Team_Interest_You , How_Much_Time_Can_You_Commit_Per_Week , What_Value_Will_You_Bring_To_Quant , What_Do_You_Hope_To_Get_Out_Of_Quant FROM new_schema.PipeLine")
         empRows = cursor.fetchall()
-        
         respone = jsonify(empRows)
         respone.status_code = 200
         return respone
@@ -75,6 +77,7 @@ def person():
 
 @app.route('/people/ID/<int:id>')
 def certain_person_ID(id):
+    """Returns the data of a specific recruit based on their id in the table"""
     try:
      conn = mysql.connect()
      cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -96,6 +99,7 @@ def certain_person_ID(id):
 
 @app.route('/people/NetID/<string:NetID>')
 def certain_person_NETID(NetID):
+    """Returns the data of a specific recruit based on their NetID in the table"""
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -117,6 +121,7 @@ def certain_person_NETID(NetID):
 
 @app.route('/update', methods=['PUT'])
 def update_person():
+    """Updates a specific recruits info based on their ID"""
     try:
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -156,6 +161,7 @@ def update_person():
 
 @app.route('/delete/ID/<int:id>', methods=['DELETE'])
 def delete_person(id):
+    """Deletes a recruits info based on their ID"""
     try:
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -176,6 +182,7 @@ def delete_person(id):
 
 @app.route('/delete/NetID/<string:NetID>', methods=['DELETE'])
 def delete_person_NetID(NetID):
+    """Deletes a recruits info based on their NetID"""
     try:
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -194,6 +201,7 @@ def delete_person_NetID(NetID):
 		
 @app.errorhandler(404)
 def not_found(error=None):
+    """Error Processor for when Record is not Found"""
     message = {
         'status': 404,
         'message': 'Record not found: ' + request.url,
